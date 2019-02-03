@@ -1,0 +1,17 @@
+html, body {
+}
+
+.bg-info{
+}
+
+.map{
+    height:100vh;
+    min-height:100vh;
+}
+
+.ParkingDesc{
+    z-index: 999;
+    position: absolute;
+    bottom:0px;
+    right:0px;
+}
