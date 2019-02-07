@@ -1,0 +1,161 @@
+/**
+  * Color
+  * Border Color
+  * Background Color  
+*/
+
+/* Color
+-------------------------------------------------------------- */
+a, a:hover, a:focus,
+.button-menu,
+#mainnav ul.main-menu li:hover > a, 
+#mainnav ul.main-menu li a.active,
+.home-1 .title-box .icon-title,
+#learn-more,
+.iconbox-wrap .icon,
+.flat-call-back .button-call-back a,
+.bottom .copyright a,
+.bottom .flat-socials li a:hover,
+.switcher-container h2 a.active:after,
+.switcher-container h2 i,
+.color-default,
+.blog-posts a:hover,
+.post-read-more,
+.go-top i,
+.header.header-fixed #mainnav ul.main-menu li a:hover, 
+.header.header-fixed #mainnav ul.main-menu li > a.active,
+.social-icon i:hover,
+#mainnav-mobi ul.sub-menu > li > a.active, 
+#mainnav-mobi ul > li > a.active {
+  color: #247fe1;
+}
+
+
+/* Border Color
+-------------------------------------------------------------- */
+.button-menu,
+.post-read-more,
+.post-tag li:hover {
+	border-color: #247fe1 !important;
+}
+
+/* Background Color
+-------------------------------------------------------------- */
+.button,
+#mainnav .sub-menu > li > a:hover, 
+#mainnav .sub-menu > li > a.active,
+.title-section.style1 .title:before,
+.iconbox-wrap .iconbox .iconbox-content:before,
+.title-section.style3 .title:after, .title-section.style4 .title:after,
+#setting-box,
+#control-box,
+.sw__border,
+.price-item.style2 .readmore a,
+.price-item .readmore a:hover,
+.post-read-more:hover,
+.post-tag li:hover,
+.btn-submit-comment:hover,
+.button-menu:hover,
+.sw-odd .sw-image .sw-buy {
+	background-color: #247fe1;
+}
+
+/* Color gradient
+-------------------------------------------------------------- */
+.gradient {
+    background: #247fe1;
+    background: -moz-linear-gradient(top, #247fe1 0%, #ab56fd 100%);
+    background: -webkit-linear-gradient(top, #247fe1 0%,#ab56fd 100%);
+    background: linear-gradient(to bottom, #247fe1 0%,#ab56fd 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#247fe1',endColorstr=#ab56fd,GradientType=0 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.flat-call-back:before {
+	background-color: rgba(36, 127, 225, 0.9);
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+button, input[type="button"], 
+input[type="reset"], 
+input[type="submit"] {
+	border-color: #247fe1;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #247fe1;
+    box-shadow: 0 0 2px #247fe1;
+}
+
+
+
+.loading-effect-2 > span,
+.loading-effect-2 > span:before,
+.loading-effect-2 > span:after {
+	content: "";
+	display: block;
+	border-radius: 50%;
+	border: 2px solid #247fe1;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	   -moz-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		 -o-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+}
+
+.loading-effect-2 > span {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	border-left-color: transparent;
+	-webkit-animation: effect-2 2s infinite linear;
+	   -moz-animation: effect-2 2s infinite linear;
+	    -ms-animation: effect-2 2s infinite linear;
+	     -o-animation: effect-2 2s infinite linear;
+	        animation: effect-2 2s infinite linear;
+}
+
+.loading-effect-2 > span:before {
+	width: 75%;
+	height: 75%;
+	border-right-color: transparent;
+}
+
+.loading-effect-2 > span:after {
+	width: 50%;
+	height: 50%;
+	border-bottom-color: transparent;
+}

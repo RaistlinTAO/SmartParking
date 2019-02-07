@@ -1,0 +1,54 @@
+/* Font Maison neue
+-------------------------------------------------------------- */
+@font-face {
+	font-family: 'Maison';
+	src: url('../fonts/MaisonNeue-Book.woff2') format('woff2'),
+		url('../fonts/MaisonNeue-Book.woff') format('woff'),
+		url('../fonts/MaisonNeue-Book.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Maison';
+	src: url('../fonts/MaisonNeue-Light.woff2') format('woff2'),
+		url('../fonts/MaisonNeue-Light.woff') format('woff'),
+		url('../fonts/MaisonNeue-Light.ttf') format('truetype');
+	font-weight: 300;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Maison';
+	src: url('../fonts/MaisonNeue-Medium.woff2') format('woff2'),
+		url('../fonts/MaisonNeue-Medium.woff') format('woff'),
+		url('../fonts/MaisonNeue-Medium.ttf') format('truetype');
+	font-weight: 500;
+	font-style: normal;
+}
+
+/* Font Eina
+-------------------------------------------------------------- */
+@font-face {
+  font-family: 'Eina';
+  src: url('../fonts/Eina03-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Eina';
+  src: url('../fonts/Eina03-SemiBold.ttf') format('ttf'),
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Eina';
+  src: url('../fonts/Eina03-Bold.ttf') format('ttf'),
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+
