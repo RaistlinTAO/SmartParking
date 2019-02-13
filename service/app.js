@@ -12,6 +12,7 @@ var usersRouter = require('./routes/users');
 /**
  * @MYSQL
  */
+
 var mysql = require('mysql');
 
 var app = express();
@@ -28,8 +29,10 @@ var app = express();
 /**
 * @PARKING_DATABASE.SQL
 **/
+    //PARKING_DATABASE.SQL used for creating the table, the data source is:
+    //https://data.melbourne.vic.gov.au/Transport-Movement/On-street-Parking-Bay-Sensors/vh2v-4nfs
 var con = mysql.createConnection({
-    host: "203.87.7.66",
+    host: "manyi.ga", //change to alt server
     port: "3306",
     user: "twoshot",
     password: "7ujm8ik,",
@@ -37,19 +40,29 @@ var con = mysql.createConnection({
 });
 
 app.get('/test', function (req, res) {
-    res.send('Hello World!');
+    res.send('Service Running');
 });
 
 app.post("/getparkingspaces", function (request, response) {
 
     var lat = request.body.lat;
     var lng = request.body.lng;
+
     //The location data is user's current GPS location
     //The server than send back spaces within a lat/lng range.
     console.log('Prepared data');
-    con.query('SELECT * from space WHERE spaceLat = \"' +  ""  + '\"', function (err, rows, fields) {
+    //TODO: The database should fetch realtime data from other parties when at the final stage.
+    //TODO: However, in this prototype we return real data but use random status (occupied) to demonstrate.
+
+    //In the final stage, the SQL statement should be like this:
+    //WHERE `spaceLat` >= 40.225619  (lat - 0.000010)
+    //   AND `spaceLat` <= 40.226561  (lat + 0.000010)
+    //   AND `spaceLng` >= -74.223882   (lng - 0.000010)
+    //   AND `spaceLng` <= -74.220861;  (lng + 0.000010)
+    con.query('SELECT * from space WHERE spaceLat >= ' +  lat - 0.001  + ' AND spaceLat<='+  lat + 0.001  +
+        ' AND spaceLng <= ' +  lng - 0.001  + ' AND spaceLng<='+  lng + 0.001, function (err, rows, fields) {
         if (!err) {
-            console.log(rows);
+            //console.log(rows);
             response.send(rows);
         }
         else {
