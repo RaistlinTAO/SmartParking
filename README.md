@@ -1,5 +1,7 @@
 # Smart Parking
 
+The server is up and running at: http://manyi.ga:4000/
+
 ###TO DO LIST
 
 - [x] Basic Map intergration
