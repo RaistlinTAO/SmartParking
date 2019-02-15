@@ -2,6 +2,9 @@
 
 The server is up and running at: http://manyi.ga:4000/
 
+##ChangeLog
+*15/02/2019 Data source is now using Google Map
+
 ###Basic Structure
 
 - [x] Basic Map intergration
@@ -11,7 +14,7 @@ The server is up and running at: http://manyi.ga:4000/
 
 ####Features
 
-- [ ] Show Public Car parks on the map with icon (1)- within x range 
+- [ ] Show Public Car parks on the map with icon (1)- within x range  
 - [ ] Show Private Car Parks on the map with icon (2)- within x range
 - [ ] Show Private Car PArks with Charging Station on the map with icon (3) within x range
 - [ ] Use Manual Search to book at Time now for Private Car Park - 

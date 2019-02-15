@@ -6,30 +6,23 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`parking` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 
-USE `parking`;
-
-/*Table structure for table `space` */
-
-DROP TABLE IF EXISTS `space`;
+Create Table
 
 CREATE TABLE `space` (
   `spaceID` int(11) NOT NULL AUTO_INCREMENT,
-  `spaceType` int(1) DEFAULT NULL,
+  `spaceType` varchar(2) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `spaceName` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `spaceLat` float DEFAULT NULL,
-  `spaceLng` float DEFAULT NULL,
+  `spaceAddress` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spacePhone` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spaceWebsite` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spaceLat` decimal(10,8) DEFAULT NULL,
+  `spaceLng` decimal(11,8) DEFAULT NULL,
   `spaceStatus` int(1) DEFAULT NULL,
   `spaceBayNo` int(6) DEFAULT NULL,
   `spaceStreetMarker` varchar(6) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `spaceRestriction` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spacePrice` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `spaceGoogleMap` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`spaceID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-/*Data for the table `space` */
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
