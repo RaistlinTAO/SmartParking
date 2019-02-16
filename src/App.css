@@ -14,4 +14,23 @@ html, body {
     position: absolute;
     bottom:0px;
     right:0px;
+    width: 100%;
+}
+
+.priceTag{
+    color: #c80000;
+}
+
+.chargerTag{
+    color: #1c7430;
+}
+
+.statusTag{
+    color: #1d78cb;
+}
+#siteaddress{
+    font-size: 12px;
+}
+#sitename{
+    font-weight: bold;
 }
