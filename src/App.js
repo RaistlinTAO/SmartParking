@@ -8,7 +8,7 @@ import {
     NavItem,
     NavLink,
     Container, Row, Col, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    CardTitle, CardSubtitle, Button, Modal, ModalHeader, ModalBody, ModalFooter
 } from 'reactstrap';
 import L from 'leaflet';
 import {Map, TileLayer, Marker, Popup} from 'react-leaflet';
@@ -61,13 +61,21 @@ class App extends Component {
             zoom: 16,
             spaces: [],
             test: "",
+            selectSpaceType: "0",
             selectSpaceName: "",
             selectSpaceAddress: "",
-            selectSpaceStatus:""
+            selectSpaceStatus:"",
+            bookingWindow:false
         };
 
-    }
+        this.toggle = this.toggle.bind(this);
 
+    }
+    toggle() {
+        this.setState(prevState => ({
+            bookingWindow: !prevState.bookingWindow
+        }));
+    }
 
     componentDidMount() {
         //console.log("componentDidMount");
@@ -89,8 +97,12 @@ class App extends Component {
 
     }
 
+
+
     getParkingSpaces = () => {
         window.console.log("FETCH STARTED");
+        //Offset: The area range
+        //1: ~113KM
         fetch(getParkingSpaces + '?lat=' + this.state.location.lat + '&lng=' + this.state.location.lng + '&offset=1', {
             method: 'POST',
 //            headers: {
@@ -111,12 +123,14 @@ class App extends Component {
     };
 
 
+
     clickMarker = (e) => {
         console.log((e.target.options.id).substr(5));
 
         this.setState({
             selectSpaceName: this.state.spaces[(e.target.options.id).substr(5)].spaceName,
-            selectSpaceAddress:this.state.spaces[(e.target.options.id).substr(5)].spaceAddress
+            selectSpaceAddress:this.state.spaces[(e.target.options.id).substr(5)].spaceAddress,
+            selectSpaceType:this.state.spaces[(e.target.options.id).substr(5)].spaceType
         })
 
     };
@@ -165,7 +179,7 @@ class App extends Component {
             <div className="App">
                 <div className="bg-info">
 
-                    <Map className="map" center={position} zoom={this.state.zoom}>
+                    <Map className="map" center={position} zoom={this.state.zoom} >
                         <TileLayer
                             attribution='&amp;copy <a href="http://osm.org/copyright">DEAKIN UNI</a>'
                             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
@@ -194,14 +208,34 @@ class App extends Component {
                                     <Col>Charger:  <p className={"chargerTag"}>{Math.random() >= 0.5 ? "Have":"No"}</p></Col>
                                     <Col>Status:  <p className={"statusTag"}>{Math.random() >= 0.5 ? "Full":"Available"}</p></Col>
                                 </Row>
+
+                                {this.state.selectSpaceName ?
                                 <Row>
                                     <Col><Button className="btn-block">Navigation</Button></Col>
-                                    <Col><Button className="btn-block">Booking</Button></Col>
-                                </Row>
-
+                                    {/* SpaceType: 0: Public Free, 1: Commercial, 2: Private.
+                                     // You cannot booking public free parking space, so once the spacetype=0, the booking button is disabled*/}
+                                    {this.state.selectSpaceType !== "0" ?
+                                        <Col><Button className="btn-block" onClick={this.toggle}>Booking</Button></Col>
+                                        :
+                                        <Col><Button className="btn-block disabled">Booking</Button></Col>
+                                    }
+                                </Row> :
+                                    <Col><Button className="btn-block">I am feeling lucky</Button></Col>
+                                }
                             </CardBody>
                         </Card>
                     </div>
+
+                    <Modal isOpen={this.state.bookingWindow} toggle={this.toggle} className={this.props.className}>
+                        <ModalHeader toggle={this.toggle}>Booking</ModalHeader>
+                        <ModalBody>
+                            Confirm to booking?
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button color="primary" onClick={this.toggle}>Yes</Button>{' '}
+                            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                        </ModalFooter>
+                    </Modal>
                 </div>
 
             </div>
