@@ -8,15 +8,19 @@ import {
     NavItem,
     NavLink,
     Container, Row, Col, Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button, Modal, ModalHeader, ModalBody, ModalFooter
+    CardTitle, CardSubtitle, Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, FormText
 } from 'reactstrap';
 import L from 'leaflet';
-import {Map, TileLayer, Marker, Popup} from 'react-leaflet';
-
+import {Map, TileLayer, Marker, Popup, MapControl} from 'react-leaflet';
+import Control from 'react-leaflet-control';
+import {MdAdjust} from 'react-icons/md';
+import {MdAddLocation} from 'react-icons/md';
 import './App.css';
 
 const getParkingSpaces = 'http://manyi.ga:4000/getparkingspaces';
 const getParkingSpacesDebug = 'http://localhost:4000/getparkingspaces';
+const submitParking = 'http://localhost:4000/submitparking';
+const submitParkingDebug = 'http://localhost:4000/submitparking';
 
 //todo: Use different icons for different parking space, like green for free, red for ticket or something
 var parkingIconFree = L.icon({
@@ -57,6 +61,7 @@ class App extends Component {
             },
             //isUserLocated : false,
             //NOTE: The end product should set this value to false. So the application know the correct location is fetched
+            //However for the demo, the location is fixed in city since the parking space data limit.
             isUserLocated: true,
             zoom: 16,
             spaces: [],
@@ -64,16 +69,25 @@ class App extends Component {
             selectSpaceType: "0",
             selectSpaceName: "",
             selectSpaceAddress: "",
-            selectSpaceStatus:"",
-            bookingWindow:false
+            selectSpaceStatus: "",
+            bookingWindow: false,
+            submitWindow: false
         };
 
         this.toggle = this.toggle.bind(this);
+        this.toggle2 = this.toggle2.bind(this);
 
     }
+
     toggle() {
         this.setState(prevState => ({
             bookingWindow: !prevState.bookingWindow
+        }));
+    }
+
+    toggle2() {
+        this.setState(prevState => ({
+            submitWindow: !prevState.submitWindow
         }));
     }
 
@@ -98,12 +112,11 @@ class App extends Component {
     }
 
 
-
     getParkingSpaces = () => {
         window.console.log("FETCH STARTED");
         //Offset: The area range
         //1: ~113KM
-        fetch(getParkingSpaces + '?lat=' + this.state.location.lat + '&lng=' + this.state.location.lng + '&offset=1', {
+        fetch(getParkingSpacesDebug + '?lat=' + this.state.location.lat + '&lng=' + this.state.location.lng + '&offset=1', {
             method: 'POST',
 //            headers: {
 //                'Accept': 'application/json',
@@ -117,11 +130,10 @@ class App extends Component {
     };
 
     getServerStatus = () => {
-        fetch(getParkingSpaces + '/test')
+        fetch(getParkingSpacesDebug + '/test')
             .then(res => res.json())
             .then(test => this.setState({test}))
     };
-
 
 
     clickMarker = (e) => {
@@ -129,8 +141,8 @@ class App extends Component {
 
         this.setState({
             selectSpaceName: this.state.spaces[(e.target.options.id).substr(5)].spaceName,
-            selectSpaceAddress:this.state.spaces[(e.target.options.id).substr(5)].spaceAddress,
-            selectSpaceType:this.state.spaces[(e.target.options.id).substr(5)].spaceType
+            selectSpaceAddress: this.state.spaces[(e.target.options.id).substr(5)].spaceAddress,
+            selectSpaceType: this.state.spaces[(e.target.options.id).substr(5)].spaceType
         })
 
     };
@@ -146,18 +158,27 @@ class App extends Component {
             for (let i = 0; i < this.state.spaces.length; i++) {
                 let position = [this.state.spaces[i].spaceLat, this.state.spaces[i].spaceLng];
                 //Create the maker and add the position
-                switch(this.state.spaces[i].spaceType)
-                {
+                switch (this.state.spaces[i].spaceType) {
                     //0: FREE, 1: Commercial, 2: Private
                     case "0":
                     default:
-                        makers.push(<Marker onClick={this.clickMarker} id={"maker"+i} key={"maker"+this.state.spaces[i].spaceID} position={position} icon={parkingIconFree}  > <Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}</Popup></Marker>);
+                        makers.push(<Marker onClick={this.clickMarker} id={"maker" + i}
+                                            key={"maker" + this.state.spaces[i].spaceID} position={position}
+                                            icon={parkingIconFree}>
+                            <Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}
+                            </Popup></Marker>);
                         break;
                     case "1":
-                        makers.push(<Marker onClick={this.clickMarker} id={"maker"+i} key={"maker"+this.state.spaces[i].spaceID} position={position} icon={parkingIconCommercial} > <Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}</Popup></Marker>);
+                        makers.push(<Marker onClick={this.clickMarker} id={"maker" + i}
+                                            key={"maker" + this.state.spaces[i].spaceID} position={position}
+                                            icon={parkingIconCommercial}> <Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}
+                        </Popup></Marker>);
                         break;
                     case "2":
-                        makers.push(<Marker onClick={this.clickMarker} id={"maker"+i} key={"maker"+this.state.spaces[i].spaceID} position={position} icon={parkingIconPrivate} ><Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}</Popup> </Marker>);
+                        makers.push(<Marker onClick={this.clickMarker} id={"maker" + i}
+                                            key={"maker" + this.state.spaces[i].spaceID} position={position}
+                                            icon={parkingIconPrivate}><Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}
+                        </Popup> </Marker>);
                         break;
                 }
 
@@ -165,6 +186,11 @@ class App extends Component {
         }
 
         return makers
+    };
+
+    centerMap = () => {
+        const map = this.refs.map.leafletElement;
+        map.panTo([this.state.location.lat, this.state.location.lng]);
     };
 
     render() {
@@ -179,7 +205,7 @@ class App extends Component {
             <div className="App">
                 <div className="bg-info">
 
-                    <Map className="map" center={position} zoom={this.state.zoom} >
+                    <Map className="map" center={position} zoom={this.state.zoom} ref='map'>
                         <TileLayer
                             attribution='&amp;copy <a href="http://osm.org/copyright">DEAKIN UNI</a>'
                             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
@@ -192,34 +218,52 @@ class App extends Component {
                         {this.createMakers()}
                         <Marker position={position2} icon={parkingIconFree}/>
                         <Marker position={position3} icon={parkingIconFree}> </Marker>
+                        <Control position="topright">
+                            <button
+                                onClick={this.centerMap}
+                            >
+                                <MdAdjust size={30} color="black"/>
+                            </button>
+                        </Control>
+                        <Control position="topright">
+                            <button
+                                onClick={this.toggle2}>
 
+                                <MdAddLocation size={30} color="black"/>
+                            </button>
+                        </Control>
                     </Map>
 
                     <div className="ParkingDesc">
                         <Card>
 
                             <CardBody>
-                                <CardTitle id={"sitename"} >{ this.state && this.state.selectSpaceName ? this.state.selectSpaceName : 'Packing Space Name' }</CardTitle>
-                                <CardText  id={"siteaddress"} >
-                                    { this.state && this.state.selectSpaceAddress ? this.state.selectSpaceAddress : 'Packing Space Address' }
+                                <CardTitle
+                                    id={"sitename"}>{this.state && this.state.selectSpaceName ? this.state.selectSpaceName : 'Packing Space Name'}</CardTitle>
+                                <CardText id={"siteaddress"}>
+                                    {this.state && this.state.selectSpaceAddress ? this.state.selectSpaceAddress : 'Packing Space Address'}
                                 </CardText>
                                 <Row>
-                                    <Col>Price: <p className={"priceTag"}>${(2 + (Math.random() * (20-2))).toFixed(0)}</p></Col>
-                                    <Col>Charger:  <p className={"chargerTag"}>{Math.random() >= 0.5 ? "Have":"No"}</p></Col>
-                                    <Col>Status:  <p className={"statusTag"}>{Math.random() >= 0.5 ? "Full":"Available"}</p></Col>
+                                    <Col>Price: <p
+                                        className={"priceTag"}>${(2 + (Math.random() * (20 - 2))).toFixed(0)}</p></Col>
+                                    <Col>Charger: <p className={"chargerTag"}>{Math.random() >= 0.5 ? "Have" : "No"}</p>
+                                    </Col>
+                                    <Col>Status: <p
+                                        className={"statusTag"}>{Math.random() >= 0.5 ? "Full" : "Available"}</p></Col>
                                 </Row>
 
                                 {this.state.selectSpaceName ?
-                                <Row>
-                                    <Col><Button className="btn-block">Navigation</Button></Col>
-                                    {/* SpaceType: 0: Public Free, 1: Commercial, 2: Private.
+                                    <Row>
+                                        <Col><Button className="btn-block">Navigation</Button></Col>
+                                        {/* SpaceType: 0: Public Free, 1: Commercial, 2: Private.
                                      // You cannot booking public free parking space, so once the spacetype=0, the booking button is disabled*/}
-                                    {this.state.selectSpaceType !== "0" ?
-                                        <Col><Button className="btn-block" onClick={this.toggle}>Booking</Button></Col>
-                                        :
-                                        <Col><Button className="btn-block disabled">Booking</Button></Col>
-                                    }
-                                </Row> :
+                                        {this.state.selectSpaceType !== "0" ?
+                                            <Col><Button className="btn-block"
+                                                         onClick={this.toggle}>Booking</Button></Col>
+                                            :
+                                            <Col><Button className="btn-block disabled">Booking</Button></Col>
+                                        }
+                                    </Row> :
                                     <Col><Button className="btn-block">I am feeling lucky</Button></Col>
                                 }
                             </CardBody>
@@ -235,6 +279,36 @@ class App extends Component {
                             <Button color="primary" onClick={this.toggle}>Yes</Button>{' '}
                             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
+                    </Modal>
+
+                    <Modal isOpen={this.state.submitWindow} toggle={this.toggle2} className={this.props.className}>
+                        <ModalHeader toggle={this.toggle2}>Submit Your Own Parking Space</ModalHeader>
+                        <Form action = {submitParkingDebug} method="POST">
+                            <ModalBody>
+                                <FormGroup>
+                                    <Label for="address">Parking Address:</Label>
+                                    <Input type="text" name="address" id="address" placeholder=""/>
+                                </FormGroup><FormGroup>
+                                <Label for="suburb">Suburb:</Label>
+                                <Input type="text" name="suburb" id="suburb" placeholder=""/>
+                            </FormGroup><FormGroup>
+                                <Label for="state">State:</Label>
+                                <Input type="text" name="state" id="state" placeholder="VIC"/>
+                            </FormGroup><FormGroup>
+                                <Label for="spaces">Parking Space Number:</Label>
+                                <Input type="number" name="spaces" id="spaces" placeholder=""/>
+                            </FormGroup><FormGroup>
+                                <Label for="state">Your Phone Number:</Label>
+                                <Input type="text" name="phone" id="phone" placeholder=""/>
+                            </FormGroup><FormGroup>
+                                <Label for="state">Hourly Price:</Label>
+                                <Input type="number" name="price" id="price" placeholder=""/>
+                            </FormGroup>
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button>Submit</Button>
+                            </ModalFooter>
+                        </Form>
                     </Modal>
                 </div>
 

@@ -12,7 +12,7 @@ var mysql = require('mysql');
 var app = express();
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+const requestX = require('request');
 app.use(logger('dev'));
 //app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded({ extended: true }));
@@ -62,6 +62,49 @@ app.get('/test', function (req, res, next) {
 app.post('/', function (req, res, next) {
     res.send('POST request');
     next();
+});
+
+app.post("/submitparking", function (request, response, next) {
+    console.log('Activated Post Function /submitparking');
+    console.log(request.body);
+    if (request.body.address) {
+        let address = request.body.address;
+        let suburb = request.body.suburb;
+        let state = request.body.state;
+        let spaces = request.body.spaces;
+        let phone = request.body.phone;
+        let price = request.body.price;
+
+        let fulladdress =  address + ', ' + suburb + ', ' + state;
+        //http://autocomplete.geocoder.api.here.com/6.2/suggest.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&query=Pariser+1+Berl&beginHighlight=<b>&endHighlight=</b>
+        //http://autocomplete.geocoder.api.here.com/6.2/suggest.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&country=AUS&query=fulladdress
+        console.log('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext='+encodeURIComponent(fulladdress));
+        requestX('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext='+encodeURIComponent(fulladdress), { json: true }, (err, res, body) => {
+            if (err) { return console.log(err); }
+            //console.log(body.url);
+            //.log(body.explanation);
+
+            let sqlStatement = 'INSERT INTO space (spaceType, spaceName, spaceAddress, spacePhone, spaceLat, spaceLng, spacePrice) ' +
+                'VALUES (2, "Private List Parking", "' + fulladdress + '", ' + phone + ', 0,0,' + price +');' ;
+
+            console.log(sqlStatement);
+            con.query(sqlStatement, (err, rows, fields) => {
+                console.log(rows);
+                if (err) {
+                    response.status(404).send(" Something went wrong");
+                    // res.sendStatus(500);
+                    throw err;
+                }
+                console.log('OK');
+                response.send('OK');
+
+            });
+        });
+
+
+        //next();
+    }
+    //next();
 });
 
 app.post("/getparkingspaces", function (request, response, next) {
