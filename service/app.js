@@ -102,7 +102,7 @@ app.post("/submitparking", function (request, response, next) {
                     throw err;
                 }
                 console.log('OK');
-                response.send('OK');
+                response.send('OJBK');
 
             });
 

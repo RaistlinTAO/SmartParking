@@ -226,7 +226,10 @@ class App extends Component {
             + '&space=' + this.state.space + '&phone=' + this.state.phone + '&price=' + this.state.price, {
             method: 'POST',
             //body: JSON.stringify(formData)
-        });
+        }).then(response => response)
+            .then(this.toggle2)
+            ;
+
     };
 
     render() {
