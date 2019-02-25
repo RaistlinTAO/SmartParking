@@ -66,7 +66,7 @@ app.post('/', function (req, res, next) {
 
 app.post("/submitparking", function (request, response, next) {
     console.log('Activated Post Function /submitparking');
-    console.log(request.body);
+    //console.log(request.body);
     if (request.body.address) {
         let address = request.body.address;
         let suburb = request.body.suburb;
@@ -76,18 +76,21 @@ app.post("/submitparking", function (request, response, next) {
         let price = request.body.price;
 
         let fulladdress =  address + ', ' + suburb + ', ' + state;
+        console.log(fulladdress);
         //http://autocomplete.geocoder.api.here.com/6.2/suggest.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&query=Pariser+1+Berl&beginHighlight=<b>&endHighlight=</b>
         //http://autocomplete.geocoder.api.here.com/6.2/suggest.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&country=AUS&query=fulladdress
         console.log('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext='+encodeURIComponent(fulladdress));
-        requestX('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext='+encodeURIComponent(fulladdress), { json: true }, (err, res, body) => {
+        requestX('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext='+encodeURIComponent(fulladdress), (err, res, body) => {
             if (err) { return console.log(err); }
-            //console.log(body.url);
-            //.log(body.explanation);
+            var obj = JSON.parse(body);
+            console.log(obj.Response.View[0].Result[0].Location.DisplayPosition);
 
             let sqlStatement = 'INSERT INTO space (spaceType, spaceName, spaceAddress, spacePhone, spaceLat, spaceLng, spacePrice) ' +
-                'VALUES (2, "Private List Parking", "' + fulladdress + '", ' + phone + ', 0,0,' + price +');' ;
+                'VALUES (2, "Private List Parking", "' + fulladdress + '", ' + phone + ', ' + obj.Response.View[0].Result[0].Location.DisplayPosition.Latitude +
+                ' , ' + obj.Response.View[0].Result[0].Location.DisplayPosition.Longitude + ',' + price +');' ;
 
             console.log(sqlStatement);
+
             con.query(sqlStatement, (err, rows, fields) => {
                 console.log(rows);
                 if (err) {
@@ -99,6 +102,7 @@ app.post("/submitparking", function (request, response, next) {
                 response.send('OK');
 
             });
+            
         });
 
 
