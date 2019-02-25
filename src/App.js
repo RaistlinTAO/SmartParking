@@ -220,6 +220,7 @@ class App extends Component {
         });
         */
         //var options = { content: formData };
+        const map = this.refs.map.leafletElement;
         console.log(submitParkingDebug + '?address=' + this.state.address + '&suburb=' + this.state.suburb + '&state=' + this.state.state
             + '&space=' + this.state.space + '&phone=' + this.state.phone + '&price=' + this.state.price);
         fetch(submitParkingDebug + '?address=' + this.state.address + '&suburb=' + this.state.suburb + '&state=' + this.state.state
@@ -227,8 +228,8 @@ class App extends Component {
             method: 'POST',
             //body: JSON.stringify(formData)
         }).then(response => response)
-            .then(this.toggle2)
-            ;
+            .then(this.toggle2).then(this.getParkingSpaces).then(map.forceUpdate)
+        ;
 
     };
 

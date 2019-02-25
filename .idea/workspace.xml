@@ -19,12 +19,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="215" column="51" lean-forward="true" selection-start-line="215" selection-start-column="51" selection-end-line="215" selection-end-column="51" />
+            <state relative-caret-position="136">
+              <caret line="224" column="78" selection-start-line="224" selection-start-column="78" selection-end-line="224" selection-end-column="78" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
                 <element signature="e#10356#12475#0" />
-                <element signature="e#12500#12628#0" />
               </folding>
             </state>
           </provider>
@@ -67,6 +66,7 @@
       <find>submitParkingDebug</find>
       <find>getParkingSpacesDebug</find>
       <find>bodyParser</find>
+      <find>map</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -138,6 +138,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -202,12 +203,12 @@
       <workItem from="1550119755770" duration="65501000" />
       <workItem from="1550411187377" duration="15323000" />
       <workItem from="1550595571438" duration="21000" />
-      <workItem from="1550977166333" duration="45215000" />
+      <workItem from="1550977166333" duration="46322000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="148071000" />
+    <option name="totallyTimeSpent" value="149178000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -401,12 +402,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="215" column="51" lean-forward="true" selection-start-line="215" selection-start-column="51" selection-end-line="215" selection-end-column="51" />
+        <state relative-caret-position="136">
+          <caret line="224" column="78" selection-start-line="224" selection-start-column="78" selection-end-line="224" selection-end-column="78" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
             <element signature="e#10356#12475#0" />
-            <element signature="e#12500#12628#0" />
           </folding>
         </state>
       </provider>
