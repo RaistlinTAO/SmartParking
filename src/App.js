@@ -19,7 +19,7 @@ import './App.css';
 
 const getParkingSpaces = 'http://manyi.ga:4000/getparkingspaces';
 const getParkingSpacesDebug = 'http://localhost:4000/getparkingspaces';
-const submitParking = 'http://localhost:4000/submitparking';
+const submitParking = 'http://manyi.ga:4000/submitparking';
 const submitParkingDebug = 'http://localhost:4000/submitparking';
 
 //todo: Use different icons for different parking space, like green for free, red for ticket or something
@@ -71,7 +71,13 @@ class App extends Component {
             selectSpaceAddress: "",
             selectSpaceStatus: "",
             bookingWindow: false,
-            submitWindow: false
+            submitWindow: false,
+            address: "",
+            suburb: "",
+            state: "",
+            space: "",
+            phone: "",
+            price: ""
         };
 
         this.toggle = this.toggle.bind(this);
@@ -89,6 +95,11 @@ class App extends Component {
         this.setState(prevState => ({
             submitWindow: !prevState.submitWindow
         }));
+    }
+
+    handleChange(event) {
+        const name = event.target.name;
+        this.setState({[name]: event.target.value})
     }
 
     componentDidMount() {
@@ -116,7 +127,7 @@ class App extends Component {
         window.console.log("FETCH STARTED");
         //Offset: The area range
         //1: ~113KM
-        fetch(getParkingSpacesDebug + '?lat=' + this.state.location.lat + '&lng=' + this.state.location.lng + '&offset=1', {
+        fetch(getParkingSpacesDebug + '?lat=' + this.state.location.lat + '&lng=' + this.state.location.lng + '&offset=0', {
             method: 'POST',
 //            headers: {
 //                'Accept': 'application/json',
@@ -191,6 +202,31 @@ class App extends Component {
     centerMap = () => {
         const map = this.refs.map.leafletElement;
         map.panTo([this.state.location.lat, this.state.location.lng]);
+    };
+
+    parkingSubmit = (event) => {
+        event.preventDefault();
+        /*
+        let formData = new FormData();
+        console.log(this.state.address);
+        formData.append('address', this.state.address);
+        formData.append('suburb', this.state.suburb);
+        formData.append('state', this.state.state);
+        formData.append('space', this.state.space);
+        formData.append('phone', this.state.phone);
+        formData.append('price', this.state.price);
+        formData.forEach((value, key) => {
+            console.log("key %s: value %s", key, value);
+        });
+        */
+        //var options = { content: formData };
+        console.log(submitParkingDebug + '?address=' + this.state.address + '&suburb=' + this.state.suburb + '&state=' + this.state.state
+            + '&space=' + this.state.space + '&phone=' + this.state.phone + '&price=' + this.state.price);
+        fetch(submitParkingDebug + '?address=' + this.state.address + '&suburb=' + this.state.suburb + '&state=' + this.state.state
+            + '&space=' + this.state.space + '&phone=' + this.state.phone + '&price=' + this.state.price, {
+            method: 'POST',
+            //body: JSON.stringify(formData)
+        });
     };
 
     render() {
@@ -283,30 +319,44 @@ class App extends Component {
 
                     <Modal isOpen={this.state.submitWindow} toggle={this.toggle2} className={this.props.className}>
                         <ModalHeader toggle={this.toggle2}>Submit Your Own Parking Space</ModalHeader>
-                        <Form action = {submitParkingDebug} method="POST">
+                        <Form onSubmit={this.parkingSubmit} id='parkingsubmitform'>
                             <ModalBody>
                                 <FormGroup>
                                     <Label for="address">Parking Address:</Label>
-                                    <Input type="text" name="address" id="address" placeholder=""/>
-                                </FormGroup><FormGroup>
-                                <Label for="suburb">Suburb:</Label>
-                                <Input type="text" name="suburb" id="suburb" placeholder=""/>
-                            </FormGroup><FormGroup>
-                                <Label for="state">State:</Label>
-                                <Input type="text" name="state" id="state" placeholder="VIC"/>
-                            </FormGroup><FormGroup>
-                                <Label for="spaces">Parking Space Number:</Label>
-                                <Input type="number" name="spaces" id="spaces" placeholder=""/>
-                            </FormGroup><FormGroup>
-                                <Label for="state">Your Phone Number:</Label>
-                                <Input type="text" name="phone" id="phone" placeholder=""/>
-                            </FormGroup><FormGroup>
-                                <Label for="state">Hourly Price:</Label>
-                                <Input type="number" name="price" id="price" placeholder=""/>
-                            </FormGroup>
+                                    <Input type="text" name="address" id="address" placeholder=""
+                                           value={this.state.address}
+                                           onChange={this.handleChange.bind(this)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="suburb">Suburb:</Label>
+                                    <Input type="text" name="suburb" id="suburb" placeholder=""
+                                           value={this.state.suburb}
+                                           onChange={this.handleChange.bind(this)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="state">State:</Label>
+                                    <Input type="text" name="state" id="state" placeholder="VIC"
+                                           value={this.state.state}
+                                           onChange={this.handleChange.bind(this)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="spaces">Parking Space Number:</Label>
+                                    <Input type="number" name="space" id="space" placeholder="" value={this.state.space}
+                                           onChange={this.handleChange.bind(this)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="state">Your Phone Number:</Label>
+                                    <Input type="text" name="phone" id="phone" placeholder="" value={this.state.phone}
+                                           onChange={this.handleChange.bind(this)}/>
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label for="state">Hourly Price:</Label>
+                                    <Input type="number" name="price" id="price" placeholder="" value={this.state.price}
+                                           onChange={this.handleChange.bind(this)}/>
+                                </FormGroup>
                             </ModalBody>
                             <ModalFooter>
-                                <Button>Submit</Button>
+                                <Button type="submit">Submit</Button>
                             </ModalFooter>
                         </Form>
                     </Modal>

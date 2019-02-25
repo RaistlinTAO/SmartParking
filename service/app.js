@@ -66,28 +66,31 @@ app.post('/', function (req, res, next) {
 
 app.post("/submitparking", function (request, response, next) {
     console.log('Activated Post Function /submitparking');
-    //console.log(request.body);
-    if (request.body.address) {
-        let address = request.body.address;
-        let suburb = request.body.suburb;
-        let state = request.body.state;
-        let spaces = request.body.spaces;
-        let phone = request.body.phone;
-        let price = request.body.price;
+    //console.log(request.query);
+    //console.log(request.query.address );
+    if (request.query.address) {
+        let address = request.query.address;
+        let suburb = request.query.suburb;
+        let state = request.query.state;
+        let spaces = request.query.spaces;
+        let phone = request.query.phone;
+        let price = request.query.price;
 
-        let fulladdress =  address + ', ' + suburb + ', ' + state;
+        let fulladdress = address + ', ' + suburb + ', ' + state;
         console.log(fulladdress);
         //http://autocomplete.geocoder.api.here.com/6.2/suggest.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&query=Pariser+1+Berl&beginHighlight=<b>&endHighlight=</b>
         //http://autocomplete.geocoder.api.here.com/6.2/suggest.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&country=AUS&query=fulladdress
-        console.log('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext='+encodeURIComponent(fulladdress));
-        requestX('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext='+encodeURIComponent(fulladdress), (err, res, body) => {
-            if (err) { return console.log(err); }
+        console.log('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext=' + encodeURIComponent(fulladdress));
+        requestX('https://geocoder.api.here.com/6.2/geocode.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&searchtext=' + encodeURIComponent(fulladdress), (err, res, body) => {
+            if (err) {
+                return console.log(err);
+            }
             var obj = JSON.parse(body);
             console.log(obj.Response.View[0].Result[0].Location.DisplayPosition);
 
             let sqlStatement = 'INSERT INTO space (spaceType, spaceName, spaceAddress, spacePhone, spaceLat, spaceLng, spacePrice) ' +
                 'VALUES (2, "Private List Parking", "' + fulladdress + '", ' + phone + ', ' + obj.Response.View[0].Result[0].Location.DisplayPosition.Latitude +
-                ' , ' + obj.Response.View[0].Result[0].Location.DisplayPosition.Longitude + ',' + price +');' ;
+                ' , ' + obj.Response.View[0].Result[0].Location.DisplayPosition.Longitude + ',' + price + ');';
 
             console.log(sqlStatement);
 
@@ -102,9 +105,8 @@ app.post("/submitparking", function (request, response, next) {
                 response.send('OK');
 
             });
-            
-        });
 
+        });
 
         //next();
     }
