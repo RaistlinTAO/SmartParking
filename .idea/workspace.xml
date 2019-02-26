@@ -20,12 +20,9 @@
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="250">
-              <caret line="264" column="6" lean-forward="true" selection-start-line="264" selection-start-column="6" selection-end-line="264" selection-end-column="6" />
+              <caret line="390" column="47" selection-start-line="390" selection-start-column="47" selection-end-line="390" selection-end-column="47" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#9491#10038#0" />
-                <element signature="e#10642#12761#0" />
-                <element signature="e#12786#12914#0" />
                 <element signature="e#12948#14305#0" />
               </folding>
             </state>
@@ -53,8 +50,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="115">
-              <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+            <state relative-caret-position="368">
+              <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -78,7 +75,11 @@
       <find>submitParkingDebug</find>
       <find>getParkingSpacesDebug</find>
       <find>bodyParser</find>
+      <find>clickMarker</find>
       <find>map</find>
+      <find>create</find>
+      <find>createRef</find>
+      <find>feel</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -107,9 +108,9 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="320" />
-    <option name="y" value="219" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="637" />
+    <option name="y" value="669" />
     <option name="width" value="1253" />
     <option name="height" value="1196" />
   </component>
@@ -221,12 +222,12 @@
       <workItem from="1550411187377" duration="15323000" />
       <workItem from="1550595571438" duration="21000" />
       <workItem from="1550977166333" duration="46322000" />
-      <workItem from="1551161748215" duration="4875000" />
+      <workItem from="1551161748215" duration="15467000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="154053000" />
+    <option name="totallyTimeSpent" value="164645000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -404,13 +405,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/service/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="23">
@@ -418,15 +412,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="16" column="14" lean-forward="true" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
-          <caret line="264" column="6" lean-forward="true" selection-start-line="264" selection-start-column="6" selection-end-line="264" selection-end-column="6" />
+          <caret line="390" column="47" selection-start-line="390" selection-start-column="47" selection-end-line="390" selection-end-column="47" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#9491#10038#0" />
-            <element signature="e#10642#12761#0" />
-            <element signature="e#12786#12914#0" />
             <element signature="e#12948#14305#0" />
           </folding>
         </state>

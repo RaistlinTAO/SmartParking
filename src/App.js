@@ -187,6 +187,7 @@ class App extends Component {
                     case "0":
                     default:
                         makers.push(<Marker onClick={this.clickMarker} id={"maker" + i}
+                                            ref={"maker" + this.state.spaces[i].spaceID}
                                             key={"maker" + this.state.spaces[i].spaceID} position={position}
                                             icon={parkingIconFree}>
                             <Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}
@@ -194,12 +195,14 @@ class App extends Component {
                         break;
                     case "1":
                         makers.push(<Marker onClick={this.clickMarker} id={"maker" + i}
+                                            ref={"maker" + this.state.spaces[i].spaceID}
                                             key={"maker" + this.state.spaces[i].spaceID} position={position}
                                             icon={parkingIconCommercial}> <Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}
                         </Popup></Marker>);
                         break;
                     case "2":
                         makers.push(<Marker onClick={this.clickMarker} id={"maker" + i}
+                                            ref={"maker" + this.state.spaces[i].spaceID}
                                             key={"maker" + this.state.spaces[i].spaceID} position={position}
                                             icon={parkingIconPrivate}><Popup><b>{this.state.spaces[i].spaceName}</b><br/>{this.state.spaces[i].spaceAddress}
                         </Popup> </Marker>);
@@ -249,8 +252,30 @@ class App extends Component {
     };
 
     //I AM FEELING LUCKY
-    luckyPatch = ()=>{
-        console.log(this.nearestParking(this.state.location.lat,this.state.location.lng))
+    luckyPatch = () => {
+        //console.log(this.nearestParking(this.state.location.lat,this.state.location.lng))
+        let jackpot = this.nearestParking(this.state.location.lat, this.state.location.lng);
+        /*
+        this.setState({
+            selectSpaceName: jackpot.spaceName,
+            selectSpaceAddress: jackpot.spaceAddress,
+            selectSpaceType: jackpot.spaceType
+        });
+        */
+        const map = this.refs.map.leafletElement;
+        map.panTo([jackpot.spaceLat, jackpot.spaceLng]);
+        console.log('maker' + jackpot.spaceID);
+
+        this.setState({
+            selectSpaceName: jackpot.spaceName,
+            selectSpaceAddress: jackpot.spaceAddress,
+            selectSpaceType: jackpot.spaceType
+        });
+
+        const luckyMaker = this.refs["maker" + [jackpot.spaceID]].leafletElement;
+        //console.log(this.refs["maker"+[jackpot.spaceID]].leafletElement);
+        //luckyMaker.click();
+        luckyMaker.openPopup();
     };
 
     /*
@@ -275,7 +300,7 @@ class App extends Component {
     };
     nearestParking = (latitude, longitude) => {
         console.log(latitude, longitude);
-        let mindif = 99999;
+        let mindif = 999;
         let closest;
         let index;
         for (index = 0; index < this.state.spaces.length; ++index) {
@@ -294,11 +319,10 @@ class App extends Component {
     */
     render() {
 
-
         const position = [this.state.location.lat, this.state.location.lng];
+        //TESTING LOCATIONS
         const position2 = [-37.816610, 145.132740];
         const position3 = [-37.812110, 145.128520];
-
 
         return (
             <div className="App">
@@ -363,7 +387,8 @@ class App extends Component {
                                             <Col><Button className="btn-block disabled">Booking</Button></Col>
                                         }
                                     </Row> :
-                                    <Col><Button className="btn-block" onClick={this.luckyPatch}>I am feeling lucky</Button></Col>
+                                    <Col><Button className="btn-block" onClick={this.luckyPatch}>Find the CLOSEST
+                                        Parking</Button></Col>
                                 }
                             </CardBody>
                         </Card>
