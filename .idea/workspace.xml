@@ -19,11 +19,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="224" column="78" selection-start-line="224" selection-start-column="78" selection-end-line="224" selection-end-column="78" />
+            <state relative-caret-position="250">
+              <caret line="264" column="6" lean-forward="true" selection-start-line="264" selection-start-column="6" selection-end-line="264" selection-end-column="6" />
               <folding>
                 <element signature="e#0#39#0" expanded="true" />
-                <element signature="e#10356#12475#0" />
+                <element signature="e#9491#10038#0" />
+                <element signature="e#10642#12761#0" />
+                <element signature="e#12786#12914#0" />
+                <element signature="e#12948#14305#0" />
               </folding>
             </state>
           </provider>
@@ -32,8 +35,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/service/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="102" column="4" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="4" />
+            <state relative-caret-position="23">
+              <caret line="45" selection-start-line="45" selection-end-line="45" />
             </state>
           </provider>
         </entry>
@@ -43,6 +46,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="345">
               <caret line="15" column="16" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="115">
+              <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -95,10 +107,10 @@
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="382" />
-    <option name="y" value="159" />
-    <option name="width" value="1690" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="320" />
+    <option name="y" value="219" />
+    <option name="width" value="1253" />
     <option name="height" value="1196" />
   </component>
   <component name="ProjectView">
@@ -112,6 +124,11 @@
             <path>
               <item name="SmartParking" type="b2602c69:ProjectViewProjectNode" />
               <item name="SmartParking" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SmartParking" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SmartParking" type="462c0819:PsiDirectoryNode" />
+              <item name="service" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="SmartParking" type="b2602c69:ProjectViewProjectNode" />
@@ -152,7 +169,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="npm.start (1)">
+  <component name="RunManager" selected="npm.start">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -204,11 +221,12 @@
       <workItem from="1550411187377" duration="15323000" />
       <workItem from="1550595571438" duration="21000" />
       <workItem from="1550977166333" duration="46322000" />
+      <workItem from="1551161748215" duration="4875000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="149178000" />
+    <option name="totallyTimeSpent" value="154053000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -223,13 +241,13 @@
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49417853" visible="true" weight="0.15918046" />
-      <window_info id="Structure" order="1" sideWeight="0.50582147" side_tool="true" visible="true" weight="0.15918046" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49354005" visible="true" weight="0.086288415" />
+      <window_info id="Structure" order="1" sideWeight="0.50645995" side_tool="true" visible="true" weight="0.086288415" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" sideWeight="0.50133336" side_tool="true" weight="0.2966226" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3298153" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49487785" visible="true" weight="0.38504374" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49487785" visible="true" weight="0.3842482" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49802995" weight="0.39936358" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -363,13 +381,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/service/bin/www">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -393,20 +404,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="115">
+          <caret line="14" column="27" lean-forward="true" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/service/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="102" column="4" selection-start-line="102" selection-start-column="4" selection-end-line="102" selection-end-column="4" />
+        <state relative-caret-position="23">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="224" column="78" selection-start-line="224" selection-start-column="78" selection-end-line="224" selection-end-column="78" />
+        <state relative-caret-position="250">
+          <caret line="264" column="6" lean-forward="true" selection-start-line="264" selection-start-column="6" selection-end-line="264" selection-end-column="6" />
           <folding>
             <element signature="e#0#39#0" expanded="true" />
-            <element signature="e#10356#12475#0" />
+            <element signature="e#9491#10038#0" />
+            <element signature="e#10642#12761#0" />
+            <element signature="e#12786#12914#0" />
+            <element signature="e#12948#14305#0" />
           </folding>
         </state>
       </provider>

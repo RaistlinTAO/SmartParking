@@ -17,12 +17,14 @@ import {MdAdjust} from 'react-icons/md';
 import {MdAddLocation} from 'react-icons/md';
 import './App.css';
 
+
+//CONST VALUES
 const getParkingSpaces = 'http://manyi.ga:4000/getparkingspaces';
 const getParkingSpacesDebug = 'http://localhost:4000/getparkingspaces';
 const submitParking = 'http://manyi.ga:4000/submitparking';
 const submitParkingDebug = 'http://localhost:4000/submitparking';
 
-//todo: Use different icons for different parking space, like green for free, red for ticket or something
+//MARKERS USED ON THE MAP
 var parkingIconFree = L.icon({
     iconUrl: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAApCAYAAADAk4LOAAAFgUlEQVR4Aa1XA5BjWRTN2oW17d3YaZtr2962HUzbDNpjszW24mRt28p47v7zq/bXZtrp/lWnXr337j3nPCe85NcypgSFdugCpW5YoDAMRaIMqRi6aKq5E3YqDQO3qAwjVWrD8Ncq/RBpykd8oZUb/kaJutow8r1aP9II0WmLKLIsJyv1w/kqw9Ch2MYdB++12Onxee/QMwvf4/Dk/Lfp/i4nxTXtOoQ4pW5Aj7wpici1A9erdAN2OH64x8OSP9j3Ft3b7aWkTg/Fm91siTra0f9on5sQr9INejH6CUUUpavjFNq1B+Oadhxmnfa8RfEmN8VNAsQhPqF55xHkMzz3jSmChWU6f7/XZKNH+9+hBLOHYozuKQPxyMPUKkrX/K0uWnfFaJGS1QPRtZsOPtr3NsW0uyh6NNCOkU3Yz+bXbT3I8G3xE5EXLXtCXbbqwCO9zPQYPRTZ5vIDXD7U+w7rFDEoUUf7ibHIR4y6bLVPXrz8JVZEql13trxwue/uDivd3fkWRbS6/IA2bID4uk0UpF1N8qLlbBlXs4Ee7HLTfV1j54APvODnSfOWBqtKVvjgLKzF5YdEk5ewRkGlK0i33Eofffc7HT56jD7/6U+qH3Cx7SBLNntH5YIPvODnyfIXZYRVDPqgHtLs5ABHD3YzLuespb7t79FY34DjMwrVrcTuwlT55YMPvOBnRrJ4VXTdNnYug5ucHLBjEpt30701A3Ts+HEa73u6dT3FNWwflY86eMHPk+Yu+i6pzUpRrW7SNDg5JHR4KapmM5Wv2E8Tfcb1HoqqHMHU+uWDD7zg54mz5/2BSnizi9T1Dg4QQXLToGNCkb6tb1NU+QAlGr1++eADrzhn/u8Q2YZhQVlZ5+CAOtqfbhmaUCS1ezNFVm2imDbPmPng5wmz+gwh+oHDce0eUtQ6OGDIyR0uUhUsoO3vfDmmgOezH0mZN59x7MBi++WDL1g/eEiU3avlidO671bkLfwbw5XV2P8Pzo0ydy4t2/0eu33xYSOMOD8hTf4CrBtGMSoXfPLchX+J0ruSePw3LZeK0juPJbYzrhkH0io7B3k164hiGvawhOKMLkrQLyVpZg8rHFW7E2uHOL888IBPlNZ1FPzstSJM694fWr6RwpvcJK60+0HCILTBzZLFNdtAzJaohze60T8qBzyh5ZuOg5e7uwQppofEmf2++DYvmySqGBuKaicF1blQjhuHdvCIMvp8whTTfZzI7RldpwtSzL+F1+wkdZ2TBOW2gIF88PBTzD/gpeREAMEbxnJcaJHNHrpzji0gQCS6hdkEeYt9DF/2qPcEC8RM28Hwmr3sdNyht00byAut2k3gufWNtgtOEOFGUwcXWNDbdNbpgBGxEvKkOQsxivJx33iow0Vw5S6SVTrpVq11ysA2Rp7gTfPfktc6zhtXBBC+adRLshf6sG2RfHPZ5EAc4sVZ83yCN00Fk/4kggu40ZTvIEm5g24qtU4KjBrx/BTTH8ifVASAG7gKrnWxJDcU7x8X6Ecczhm3o6YicvsLXWfh3Ch1W0k8x0nXF+0fFxgt4phz8QvypiwCCFKMqXCnqXExjq10beH+UUA7+nG6mdG/Pu0f3LgFcGrl2s0kNNjpmoJ9o4B29CMO8dMT4Q5ox8uitF6fqsrJOr8qnwNbRzv6hSnG5wP+64C7h9lp30hKNtKdWjtdkbuPA19nJ7Tz3zR/ibgARbhb4AlhavcBebmTHcFl2fvYEnW0ox9xMxKBS8btJ+KiEbq9zA4RthQXDhPa0T9TEe69gWupwc6uBUphquXgf+/FrIjweHQS4/pduMe5ERUMHUd9xv8ZR98CxkS4F2n3EUrUZ10EYNw7BWm9x1GiPssi3GgiGRDKWRYZfXlON+dfNbM+GgIwYdwAAAAASUVORK5CYII=',
     iconSize: [24, 36],
@@ -51,6 +53,10 @@ var seflIcon = L.icon({
 
 });
 
+
+/*
+APP CONSTRUCTOR
+ */
 class App extends Component {
     constructor(props) {
         super(props);
@@ -85,6 +91,9 @@ class App extends Component {
 
     }
 
+    /*
+    USER INTERFACE LOGIC
+    */
     toggle() {
         this.setState(prevState => ({
             bookingWindow: !prevState.bookingWindow
@@ -101,6 +110,16 @@ class App extends Component {
         const name = event.target.name;
         this.setState({[name]: event.target.value})
     }
+
+    clickMarker = (e) => {
+        console.log((e.target.options.id).substr(5));
+
+        this.setState({
+            selectSpaceName: this.state.spaces[(e.target.options.id).substr(5)].spaceName,
+            selectSpaceAddress: this.state.spaces[(e.target.options.id).substr(5)].spaceAddress,
+            selectSpaceType: this.state.spaces[(e.target.options.id).substr(5)].spaceType
+        })
+    };
 
     componentDidMount() {
         //console.log("componentDidMount");
@@ -123,6 +142,10 @@ class App extends Component {
     }
 
 
+    /*
+    PRIVATE FUNCTIONS
+     */
+    //FETCH THE SPACE DATA FROM SERVER
     getParkingSpaces = () => {
         window.console.log("FETCH STARTED");
         //Offset: The area range
@@ -140,24 +163,14 @@ class App extends Component {
 
     };
 
+    //CHECK THE STATUS OF SERVER
     getServerStatus = () => {
         fetch(getParkingSpacesDebug + '/test')
             .then(res => res.json())
             .then(test => this.setState({test}))
     };
 
-
-    clickMarker = (e) => {
-        console.log((e.target.options.id).substr(5));
-
-        this.setState({
-            selectSpaceName: this.state.spaces[(e.target.options.id).substr(5)].spaceName,
-            selectSpaceAddress: this.state.spaces[(e.target.options.id).substr(5)].spaceAddress,
-            selectSpaceType: this.state.spaces[(e.target.options.id).substr(5)].spaceType
-        })
-
-    };
-
+    //GENERATE MAKERS ON THE MAP
     createMakers = () => {
         window.console.log(this.state.spaces.length);
         //window.console.log(JSON.parse(this.state.test));
@@ -199,11 +212,13 @@ class App extends Component {
         return makers
     };
 
+    //MOVE THE CENTER POINT OF THE USER LOCATION ON THE MAP
     centerMap = () => {
         const map = this.refs.map.leafletElement;
         map.panTo([this.state.location.lat, this.state.location.lng]);
     };
 
+    //SUBMIT NEW PRIVATE PARKING LOCATION
     parkingSubmit = (event) => {
         event.preventDefault();
         /*
@@ -233,6 +248,50 @@ class App extends Component {
 
     };
 
+    //I AM FEELING LUCKY
+    luckyPatch = ()=>{
+        console.log(this.nearestParking(this.state.location.lat,this.state.location.lng))
+    };
+
+    /*
+    FUNCTION deg2Rad(),pythagorasEquirectangular(),nearestParking() CALCULATE THE NEAREST PARKING SPACE
+     */
+    //CHANGE DEGREE
+    deg2Rad = (deg) => {
+        return deg * Math.PI / 180;
+    };
+    //CALCULATE THE DIF
+    //a = sin²(Δφ/2) + cos φ1 ⋅ cos φ2 ⋅ sin²(Δλ/2)
+    //
+    pythagorasEquirectangular = (lat1, lon1, lat2, lon2) => {
+        lat1 = this.deg2Rad(lat1);
+        lat2 = this.deg2Rad(lat2);
+        lon1 = this.deg2Rad(lon1);
+        lon2 = this.deg2Rad(lon2);
+        const R = 6371;
+        const x = (lon2 - lon1) * Math.cos((lat1 + lat2) / 2);
+        const y = (lat2 - lat1);
+        return Math.sqrt(x * x + y * y) * R;
+    };
+    nearestParking = (latitude, longitude) => {
+        console.log(latitude, longitude);
+        let mindif = 99999;
+        let closest;
+        let index;
+        for (index = 0; index < this.state.spaces.length; ++index) {
+            const dif = this.pythagorasEquirectangular(latitude, longitude, this.state.spaces[index].spaceLat,
+                this.state.spaces[index].spaceLng);
+            if (dif < mindif) {
+                closest = index;
+                mindif = dif;
+            }
+        }
+        return this.state.spaces[closest]
+    };
+
+    /*
+    RENDER
+    */
     render() {
 
 
@@ -304,7 +363,7 @@ class App extends Component {
                                             <Col><Button className="btn-block disabled">Booking</Button></Col>
                                         }
                                     </Row> :
-                                    <Col><Button className="btn-block">I am feeling lucky</Button></Col>
+                                    <Col><Button className="btn-block" onClick={this.luckyPatch}>I am feeling lucky</Button></Col>
                                 }
                             </CardBody>
                         </Card>

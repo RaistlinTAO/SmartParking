@@ -42,6 +42,7 @@ var con = mysql.createConnection({
         password: "7ujm8ik,",
         database: "parking"
     });
+
 /***************************
  LOGIC PART
  /TEST : GET, return test OK string
