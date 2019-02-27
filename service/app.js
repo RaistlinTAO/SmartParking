@@ -65,6 +65,32 @@ app.post('/', function (req, res, next) {
     next();
 });
 
+app.post("/getrouting", function (request, response, next) {
+    console.log('Activated Post Function /getrouting');
+    console.log(request.query);
+    if (request.query.lat1) {
+        let lat1 = request.query.lat1;
+        let lng1 = request.query.lng1;
+        let lat2 = request.query.lat2;
+        let lng2 = request.query.lng2;
+
+        //https://route.api.here.com/routing/7.2/calculateroute.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&waypoint0=geo!52.5,13.4&waypoint1=geo!52.5,13.45&mode=fastest;car;traffic:disabled
+        console.log('https://route.api.here.com/routing/7.2/calculateroute.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&waypoint0=geo!' + lat1 + ',' + lng1 + '&waypoint1=geo!' + lat2 + ',' + lng2+ '&mode=fastest;car;traffic:disabled');
+        requestX('https://route.api.here.com/routing/7.2/calculateroute.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&waypoint0=geo!' + lat1 + ',' + lng1 + '&waypoint1=geo!' + lat2 + ',' + lng2+ '&mode=fastest;car;traffic:disabled', (err, res, body) => {
+            if (err) {
+                return console.log(err);
+            }
+            var obj = JSON.parse(body);
+            console.log(obj.response.route);
+
+
+
+        });
+
+        //next();
+    }
+});
+
 app.post("/submitparking", function (request, response, next) {
     console.log('Activated Post Function /submitparking');
     //console.log(request.query);

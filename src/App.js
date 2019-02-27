@@ -13,6 +13,7 @@ import {
 import L from 'leaflet';
 import {Map, TileLayer, Marker, Popup, MapControl} from 'react-leaflet';
 import Control from 'react-leaflet-control';
+import AntPath from "react-leaflet-ant-path";
 import {MdAdjust} from 'react-icons/md';
 import {MdAddLocation} from 'react-icons/md';
 import './App.css';
@@ -23,6 +24,8 @@ const getParkingSpaces = 'http://manyi.ga:4000/getparkingspaces';
 const getParkingSpacesDebug = 'http://localhost:4000/getparkingspaces';
 const submitParking = 'http://manyi.ga:4000/submitparking';
 const submitParkingDebug = 'http://localhost:4000/submitparking';
+const findrouting = 'http://manyi.ga:4000/getrouting';
+const findroutingDebug = 'http://localhost:4000/getrouting';
 
 //MARKERS USED ON THE MAP
 var parkingIconFree = L.icon({
@@ -76,6 +79,8 @@ class App extends Component {
             selectSpaceName: "",
             selectSpaceAddress: "",
             selectSpaceStatus: "",
+            selectSpaceLat:"",
+            selectSpaceLng:"",
             bookingWindow: false,
             submitWindow: false,
             address: "",
@@ -117,7 +122,9 @@ class App extends Component {
         this.setState({
             selectSpaceName: this.state.spaces[(e.target.options.id).substr(5)].spaceName,
             selectSpaceAddress: this.state.spaces[(e.target.options.id).substr(5)].spaceAddress,
-            selectSpaceType: this.state.spaces[(e.target.options.id).substr(5)].spaceType
+            selectSpaceType: this.state.spaces[(e.target.options.id).substr(5)].spaceType,
+            selectSpaceLat:this.state.spaces[(e.target.options.id).substr(5)].spaceLat,
+            selectSpaceLng:this.state.spaces[(e.target.options.id).substr(5)].spaceLng
         })
     };
 
@@ -251,6 +258,16 @@ class App extends Component {
 
     };
 
+    findrouting = () =>{
+        fetch(findroutingDebug + '?lat1=' + this.state.location.lat + '&lng1=' + this.state.location.lng + '&lat2=' + this.state.selectSpaceLat
+            + '&lng2=' + this.state.selectSpaceLng , {
+            method: 'POST',
+            //body: JSON.stringify(formData)
+        }).then(response => response)
+            .then(this.toggle2)
+        ;
+    };
+
     //I AM FEELING LUCKY
     luckyPatch = () => {
         //console.log(this.nearestParking(this.state.location.lat,this.state.location.lng))
@@ -269,7 +286,9 @@ class App extends Component {
         this.setState({
             selectSpaceName: jackpot.spaceName,
             selectSpaceAddress: jackpot.spaceAddress,
-            selectSpaceType: jackpot.spaceType
+            selectSpaceType: jackpot.spaceType,
+            selectSpaceLat:jackpot.spaceLat,
+            selectSpaceLng:jackpot.spaceLng
         });
 
         const luckyMaker = this.refs["maker" + [jackpot.spaceID]].leafletElement;
@@ -355,6 +374,11 @@ class App extends Component {
                                 <MdAddLocation size={30} color="black"/>
                             </button>
                         </Control>
+                        <AntPath positions={[
+                            [51.509, -0.08],
+                            [51.503, -0.06],
+                            [51.51, -0.047]
+                        ]} options={{ use: L.polyline, fillColor: "red" }} />
                     </Map>
 
                     <div className="ParkingDesc">
@@ -362,22 +386,27 @@ class App extends Component {
 
                             <CardBody>
                                 <CardTitle
-                                    id={"sitename"}>{this.state && this.state.selectSpaceName ? this.state.selectSpaceName : 'Packing Space Name'}</CardTitle>
+                                    id={"sitename"}>{this.state && this.state.selectSpaceName ? this.state.selectSpaceName : ''}</CardTitle>
                                 <CardText id={"siteaddress"}>
-                                    {this.state && this.state.selectSpaceAddress ? this.state.selectSpaceAddress : 'Packing Space Address'}
+                                    {this.state && this.state.selectSpaceAddress ? this.state.selectSpaceAddress : ''}
                                 </CardText>
-                                <Row>
-                                    <Col>Price: <p
-                                        className={"priceTag"}>${(2 + (Math.random() * (20 - 2))).toFixed(0)}</p></Col>
-                                    <Col>Charger: <p className={"chargerTag"}>{Math.random() >= 0.5 ? "Have" : "No"}</p>
-                                    </Col>
-                                    <Col>Status: <p
-                                        className={"statusTag"}>{Math.random() >= 0.5 ? "Full" : "Available"}</p></Col>
-                                </Row>
-
                                 {this.state.selectSpaceName ?
                                     <Row>
-                                        <Col><Button className="btn-block">Navigation</Button></Col>
+                                        <Col>Price: <p
+                                            className={"priceTag"}>${(2 + (Math.random() * (20 - 2))).toFixed(0)}</p>
+                                        </Col>
+                                        <Col>Charger: <p
+                                            className={"chargerTag"}>{Math.random() >= 0.5 ? "Have" : "No"}</p>
+                                        </Col>
+                                        <Col>Status: <p
+                                            className={"statusTag"}>{Math.random() >= 0.5 ? "Full" : "Available"}</p>
+                                        </Col>
+                                    </Row> :
+                                    <Row/>
+                                }
+                                {this.state.selectSpaceName ?
+                                    <Row>
+                                        <Col><Button className="btn-block" onClick={this.findrouting}>Navigation</Button></Col>
                                         {/* SpaceType: 0: Public Free, 1: Commercial, 2: Private.
                                      // You cannot booking public free parking space, so once the spacetype=0, the booking button is disabled*/}
                                         {this.state.selectSpaceType !== "0" ?
