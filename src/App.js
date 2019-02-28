@@ -79,8 +79,8 @@ class App extends Component {
             selectSpaceName: "",
             selectSpaceAddress: "",
             selectSpaceStatus: "",
-            selectSpaceLat:"",
-            selectSpaceLng:"",
+            selectSpaceLat: "",
+            selectSpaceLng: "",
             bookingWindow: false,
             submitWindow: false,
             address: "",
@@ -88,7 +88,9 @@ class App extends Component {
             state: "",
             space: "",
             phone: "",
-            price: ""
+            price: "",
+            legs: [],
+            pathPoints: ""
         };
 
         this.toggle = this.toggle.bind(this);
@@ -123,8 +125,8 @@ class App extends Component {
             selectSpaceName: this.state.spaces[(e.target.options.id).substr(5)].spaceName,
             selectSpaceAddress: this.state.spaces[(e.target.options.id).substr(5)].spaceAddress,
             selectSpaceType: this.state.spaces[(e.target.options.id).substr(5)].spaceType,
-            selectSpaceLat:this.state.spaces[(e.target.options.id).substr(5)].spaceLat,
-            selectSpaceLng:this.state.spaces[(e.target.options.id).substr(5)].spaceLng
+            selectSpaceLat: this.state.spaces[(e.target.options.id).substr(5)].spaceLat,
+            selectSpaceLng: this.state.spaces[(e.target.options.id).substr(5)].spaceLng
         })
     };
 
@@ -258,14 +260,33 @@ class App extends Component {
 
     };
 
-    findrouting = () =>{
+    findrouting = () => {
         fetch(findroutingDebug + '?lat1=' + this.state.location.lat + '&lng1=' + this.state.location.lng + '&lat2=' + this.state.selectSpaceLat
-            + '&lng2=' + this.state.selectSpaceLng , {
+            + '&lng2=' + this.state.selectSpaceLng, {
             method: 'POST',
             //body: JSON.stringify(formData)
-        }).then(response => response)
-            .then(this.toggle2)
-        ;
+        }).then(response => response.json()).then(legs => this.setState({legs})).then(this.drawPath)
+    };
+
+    drawPath = () => {
+        //The Ant Data Structure
+        //[
+        //  [51.509, -0.08],
+        //  [51.503, -0.06],
+        //  [51.51, -0.047]
+        //
+        let pathString = [];
+        this.state.legs.map(function (leg, i) {
+            //console.log(leg.position.latitude + ',' +leg.position.longitude)
+            pathString[i] = [leg.position.latitude, leg.position.longitude];
+        });
+        //this.state.pathPoints
+        //console.log(pathString.substring(0, pathString.length-1));
+        this.setState({
+            pathPoints: pathString
+            //pathPoints: '[' + pathString.substring(0, pathString.length-1) + ']'
+        });
+        console.log(this.state.pathPoints);
     };
 
     //I AM FEELING LUCKY
@@ -287,8 +308,8 @@ class App extends Component {
             selectSpaceName: jackpot.spaceName,
             selectSpaceAddress: jackpot.spaceAddress,
             selectSpaceType: jackpot.spaceType,
-            selectSpaceLat:jackpot.spaceLat,
-            selectSpaceLng:jackpot.spaceLng
+            selectSpaceLat: jackpot.spaceLat,
+            selectSpaceLng: jackpot.spaceLng
         });
 
         const luckyMaker = this.refs["maker" + [jackpot.spaceID]].leafletElement;
@@ -374,11 +395,9 @@ class App extends Component {
                                 <MdAddLocation size={30} color="black"/>
                             </button>
                         </Control>
-                        <AntPath positions={[
-                            [51.509, -0.08],
-                            [51.503, -0.06],
-                            [51.51, -0.047]
-                        ]} options={{ use: L.polyline, fillColor: "red" }} />
+                        {this.state.pathPoints ?
+                            <AntPath positions={this.state.pathPoints}
+                                     options={{use: L.polyline, fillColor: "red"}}/> : ""}
                     </Map>
 
                     <div className="ParkingDesc">
@@ -406,7 +425,8 @@ class App extends Component {
                                 }
                                 {this.state.selectSpaceName ?
                                     <Row>
-                                        <Col><Button className="btn-block" onClick={this.findrouting}>Navigation</Button></Col>
+                                        <Col><Button className="btn-block"
+                                                     onClick={this.findrouting}>Navigation</Button></Col>
                                         {/* SpaceType: 0: Public Free, 1: Commercial, 2: Private.
                                      // You cannot booking public free parking space, so once the spacetype=0, the booking button is disabled*/}
                                         {this.state.selectSpaceType !== "0" ?

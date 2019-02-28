@@ -75,16 +75,14 @@ app.post("/getrouting", function (request, response, next) {
         let lng2 = request.query.lng2;
 
         //https://route.api.here.com/routing/7.2/calculateroute.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&waypoint0=geo!52.5,13.4&waypoint1=geo!52.5,13.45&mode=fastest;car;traffic:disabled
-        console.log('https://route.api.here.com/routing/7.2/calculateroute.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&waypoint0=geo!' + lat1 + ',' + lng1 + '&waypoint1=geo!' + lat2 + ',' + lng2+ '&mode=fastest;car;traffic:disabled');
-        requestX('https://route.api.here.com/routing/7.2/calculateroute.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&waypoint0=geo!' + lat1 + ',' + lng1 + '&waypoint1=geo!' + lat2 + ',' + lng2+ '&mode=fastest;car;traffic:disabled', (err, res, body) => {
+        console.log('https://route.api.here.com/routing/7.2/calculateroute.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&waypoint0=geo!' + lat1 + ',' + lng1 + '&waypoint1=geo!' + lat2 + ',' + lng2 + '&mode=fastest;car;traffic:disabled');
+        requestX('https://route.api.here.com/routing/7.2/calculateroute.json?app_id=f9QlBHyJnXIlCQo7GKFz&app_code=7LtiUGwdXGzAumIsjyQASw&waypoint0=geo!' + lat1 + ',' + lng1 + '&waypoint1=geo!' + lat2 + ',' + lng2 + '&mode=fastest;car;traffic:disabled', (err, res, body) => {
             if (err) {
                 return console.log(err);
             }
             var obj = JSON.parse(body);
-            console.log(obj.response.route);
-
-
-
+            console.log(obj.response.route[0].leg[0].maneuver);
+            response.send(obj.response.route[0].leg[0].maneuver);
         });
 
         //next();
