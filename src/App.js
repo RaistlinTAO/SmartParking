@@ -370,7 +370,7 @@ class App extends Component {
 
                     <Map className="map" center={position} zoom={this.state.zoom} ref='map'>
                         <TileLayer
-                            attribution='&amp;copy <a href="http://osm.org/copyright">DEAKIN UNI</a>'
+                            attribution='PROTOTYPE &amp;copy <a href="http://osm.org/copyright">DEAKIN UNI</a>'
                             url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
                         />
                         {this.state.isUserLocated ?
@@ -436,9 +436,17 @@ class App extends Component {
                                             <Col><Button className="btn-block disabled">Booking</Button></Col>
                                         }
                                     </Row> :
-                                    <Col><Button className="btn-block" onClick={this.luckyPatch}>Find the CLOSEST
-                                        Parking</Button></Col>
+                                    <Row>
+                                        <Col><Button className="btn-block" onClick={this.luckyPatch}>Find the CLOSEST
+                                            Parking</Button></Col>
+                                    </Row>
                                 }
+                                <Row>
+                                    <Col><span style={{color: 'blue'}}>█</span> PUBLIC</Col>
+                                    <Col><span style={{color: 'green'}}>█</span> PRIVATE</Col>
+                                    <Col><span style={{color: 'red'}}>█</span> COMMERCIAL</Col>
+                                </Row>
+
                             </CardBody>
                         </Card>
                     </div>
