@@ -18,7 +18,6 @@ import {MdAdjust} from 'react-icons/md';
 import {MdAddLocation} from 'react-icons/md';
 import './App.css';
 
-
 //CONST VALUES
 const getParkingSpaces = 'http://manyi.ga:4000/getparkingspaces';
 const getParkingSpacesDebug = 'http://localhost:4000/getparkingspaces';
@@ -55,7 +54,6 @@ var seflIcon = L.icon({
     iconAnchor: [12, 12],
 
 });
-
 
 /*
 APP CONSTRUCTOR
@@ -454,9 +452,21 @@ class App extends Component {
                     <Modal isOpen={this.state.bookingWindow} toggle={this.toggle} className={this.props.className}>
                         <ModalHeader toggle={this.toggle}>Booking</ModalHeader>
                         <ModalBody>
+                            <FormGroup>
+                                <Label for="bookingTime">Time</Label>
+                                <Input
+                                    type="time"
+                                    name="time"
+                                    id="bookingTime"
+                                    placeholder="time placeholder"
+                                />
+                            </FormGroup>
                             Confirm to booking?
                         </ModalBody>
                         <ModalFooter>
+
+
+
                             <Button color="primary" onClick={this.toggle}>Yes</Button>{' '}
                             <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                         </ModalFooter>
